@@ -1,0 +1,82 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# SignIn
+
+## SignIn [/signin]
+
+### sign in the account [POST]
+
++ Request (application/json)
+
+        {
+            "username":"zhang3"
+            "password":"zhang3"
+        }
++ Response 200 (application/json)
+            
+    + Headers
+
+            Location: /admins
+            Set-Cookie: token="abcd"
+    
+            
+
+    + Body
+
+            {
+                "Code": 200,
+                "Enmsg": "ok",
+                "Cnmsg": "成功",
+                "Data": null
+            }
+
+
+## SignOut [/signout]
+
+### sign out the account [POST]
+
++ Request (application/json)
+
+        {
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /
+            Set-Cookie: token=null
+    
+    + Body
+
+            {
+                "Code": 200,
+                "Enmsg": "ok",
+                "Cnmsg": "成功",
+                "Data": null
+            }
+            
+## Get Token IsValid [/tokenValid]
+
+### tokenValid [POST]
+
++ Request (application/json)
+
+        {
+            "token":"abcd"
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /
+    
+    + Body
+
+            {
+                "Success": true,
+                "Detail": "The token is valid.",
+                "Id": 1,
+            }
