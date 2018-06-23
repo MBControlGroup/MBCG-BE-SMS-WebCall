@@ -56,6 +56,11 @@ func webCallHandler(formatter *render.Render) http.HandlerFunc {
         var webCallInfo entities.WebCallInfo
         err := json.NewDecoder(req.Body).Decode(&webCallInfo)
         checkErr(err)
+        webCallInfo.Action = "Webcall"
+        webCallInfo.ServiceNo = "02033275113"
+        webCallInfo.WebCallType = "asynchronous"
+        webCallInfo.Variable = "role:1"
+        webCallInfo.CallBackUrl = "http://www.baidu.com/"
 
         tt := getDateTime()
         sig := mdfive(webcallAccount+webcallSecret+tt)
@@ -145,7 +150,7 @@ func getSmsTempHandler(formatter *render.Render) http.HandlerFunc {
 
 func sendTempSmsHandler(formatter *render.Render) http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
-        req.ParseForm()
+        /*req.ParseForm()
 
         if len(req.Form["vars"]) == 0 {
             formatter.JSON(w, http.StatusBadRequest, struct{ Code int;Enmsg string;Cnmsg string; Data interface{}; Message string}{400, "fail", "失败", nil, "without vars!"})
@@ -172,7 +177,10 @@ func sendTempSmsHandler(formatter *render.Render) http.HandlerFunc {
         } else {
             formatter.JSON(w, http.StatusBadRequest, struct{ Code int;Enmsg string;Cnmsg string; Data interface{}; Message string}{400, "fail", "失败", nil, "Bad vars!"})
             return
-        }
+        }*/
+        var reqBody entities.Vars4Template
+        err := json.NewDecoder(req.Body).Decode(&reqBody)
+        checkErr(err)
 
         tt := getDateTime()
         sig := mdfive(smsAccount+smsSecret+tt)
